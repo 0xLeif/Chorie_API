@@ -13,6 +13,8 @@ class UserController: RouteCollection {
         let protectedRouter = authSessionRouter.grouped(RedirectMiddleware<User>(path: "/login"))
         protectedRouter.get("profile", use: profile)
         
+        protectedRouter.post("updateProfile", use: updateProfile)
+        
         router.get("logout", use: logout)
     }
     
@@ -53,9 +55,22 @@ class UserController: RouteCollection {
         }
     }
     
-    func profile(_ req: Request) throws -> Future<String> {
+    func profile(_ req: Request) throws -> Future<User> {
         let user = try req.requireAuthenticated(User.self)
-        return Future.map(on: req) { return "You're viewing \(user.email) profile." }
+        return Future.map(on: req) { return user }
+    }
+    
+    func updateProfile(_ req: Request) throws -> Future<(User)> {
+        let user = try req.requireAuthenticated(User.self)
+        return try req.content.decode(User.self).flatMap { updatedUser in
+            if updatedUser.id != user.id {
+                struct BadAccount: Error {
+                    let desc = "BAD"
+                }
+                return req.future(error: BadAccount())
+            }
+            return updatedUser.save(on: req)
+        }
     }
     
     func logout(_ req: Request) throws -> Future<HTTPStatus> {

@@ -4,6 +4,8 @@ import Authentication
 
 /// Called before your application initializes.
 public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
+    let serverConfiure = NIOServerConfig.default(hostname: "localhost", port: 9090)
+    services.register(serverConfiure)
     // Register providers first
     try services.register(FluentSQLiteProvider())
 
