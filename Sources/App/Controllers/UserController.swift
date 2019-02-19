@@ -53,9 +53,9 @@ class UserController: RouteCollection {
         }
     }
     
-    func profile(_ req: Request) throws -> String {
+    func profile(_ req: Request) throws -> Future<String> {
         let user = try req.requireAuthenticated(User.self)
-        return "You're viewing \(user.email) profile."
+        return Future.map(on: req) { return "You're viewing \(user.email) profile." }
     }
     
     func logout(_ req: Request) throws -> Future<HTTPStatus> {
