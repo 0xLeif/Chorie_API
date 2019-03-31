@@ -2,13 +2,19 @@ import FluentSQLite
 import Vapor
 import Authentication
 
-enum Color: Int, Codable {
-    case red
-    case orange
-    case yellow
-    case green
-    case blue
-    case purple
+enum Color: Int, Codable, CaseIterable {
+    case lilacPink
+    case electricTiffiany
+    case lavendar
+    case blackGrape
+    case magenta
+    case indigo
+    case mediumBlue
+    case fog
+    case wineNDine
+    case parrot
+    case hiGreen
+    case smog
 }
 
 struct Dance: Codable {
