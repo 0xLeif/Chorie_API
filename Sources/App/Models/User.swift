@@ -2,7 +2,7 @@ import FluentSQLite
 import Vapor
 import Authentication
 
-enum Color: Int, Codable, CaseIterable {
+enum Color: Int, Codable {
     case lilacPink
     case electricTiffiany
     case lavendar
