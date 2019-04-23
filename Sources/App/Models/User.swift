@@ -20,6 +20,8 @@ enum Color: Int, Codable {
 struct Dance: Codable {
     var title: String
     var body: String
+    var youtubeVideos: [String]
+    var media: [Data]
 }
 
 struct DanceFolder: Codable {
